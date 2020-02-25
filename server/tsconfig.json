@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "typeRoots": [
+      "node_modules/@types",
+    ],
+    "target": "es2017",
+    "module": "commonjs",
+    "strict": true,
+    "allowJs": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+  },
+  "include": [
+    "./**/*.ts",
+  ],
+  "exclude": [
+    "node_modules",
+  ]
+}
