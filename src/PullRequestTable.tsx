@@ -44,6 +44,9 @@ const QUERY_VIEWER_PULLS = gql`
 export default function PullRequestTable() {
   const { data, loading, fetchMore } = useQuery<QueryViewerPulls, QueryViewerPullArgs>(
     QUERY_VIEWER_PULLS,
+    {
+      notifyOnNetworkStatusChange: true,
+    },
   );
 
   const loadMorePullRequests = useCallback(() => {
@@ -84,7 +87,12 @@ export default function PullRequestTable() {
         <Table.Column title="repo name" dataIndex="repoName" key="repoName" />
       </Table>
       {hasNextPage && (
-        <Button type="primary" disabled={loading} onClick={loadMorePullRequests}>
+        <Button
+          style={{ marginTop: '10px' }}
+          type="primary"
+          disabled={loading}
+          onClick={loadMorePullRequests}
+        >
           load more
         </Button>
       )}

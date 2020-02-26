@@ -80,7 +80,7 @@ export default function RespositoryTable() {
         <Table.Column title="description" dataIndex="description" key="description" />
       </Table>
       {state.hasNextPage && (
-        <Button disabled={loading} onClick={loadMore}>
+        <Button style={{ marginTop: '10px' }} type="primary" disabled={loading} onClick={loadMore}>
           load more
         </Button>
       )}

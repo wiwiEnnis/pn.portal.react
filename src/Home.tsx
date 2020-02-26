@@ -4,12 +4,12 @@ import RepositoryTable from './RepositoryTable';
 import PullRequestTable from './PullRequestTable';
 
 export default function Home() {
-  const [state, setState] = useState({ activeKey: 'pull' });
+  const [state, setState] = useState({ activeKey: 'repo' });
 
   return (
     <div className="home">
       <Tabs
-        defaultActiveKey="pull"
+        defaultActiveKey="repo"
         onChange={key => setState(prev => ({ ...prev, activeKey: key }))}
       >
         <Tabs.TabPane tab="My Repos" key="repo">
