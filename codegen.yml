@@ -1,0 +1,4 @@
+schema: src/graphql/github.graphql
+generates:
+  src/types/github-graphql.ts:
+    - typescript

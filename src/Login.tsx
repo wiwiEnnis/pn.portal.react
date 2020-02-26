@@ -17,7 +17,7 @@ export default function Login(): JSX.Element {
 
   return (
     <div>
-      <a href="https://github.com/login/oauth/authorize?client_id=1921cbd6e62842123d88">
+      <a href="https://github.com/login/oauth/authorize?client_id=1921cbd6e62842123d88&scope=user,public_repo,repo,repo_deployment,repo:status,read:repo_hook,read:org,read:public_key,read:gpg_key">
         github OAuth
       </a>
     </div>
