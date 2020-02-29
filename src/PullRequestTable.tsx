@@ -42,7 +42,7 @@ const QUERY_VIEWER_PULLS = gql`
 `;
 
 export default function PullRequestTable() {
-  const { data, loading, fetchMore } = useQuery<QueryViewerPulls, QueryViewerPullArgs>(
+  const { data, loading, fetchMore, refetch } = useQuery<QueryViewerPulls, QueryViewerPullArgs>(
     QUERY_VIEWER_PULLS,
     {
       notifyOnNetworkStatusChange: true,
@@ -88,7 +88,7 @@ export default function PullRequestTable() {
       </Table>
       {hasNextPage && (
         <Button
-          style={{ marginTop: '10px' }}
+          style={{ marginTop: '10px', marginRight: '10px' }}
           type="primary"
           disabled={loading}
           onClick={loadMorePullRequests}
@@ -96,6 +96,9 @@ export default function PullRequestTable() {
           load more
         </Button>
       )}
+      <Button style={{ marginTop: '10px' }} type="primary" onClick={() => refetch()}>
+        refetch
+      </Button>
     </>
   );
 }

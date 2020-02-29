@@ -36,6 +36,7 @@ const QUERY_VIEWER_STARED_REPOS = gql`
 export default function RespositoryTable() {
   interface RespositoryTableState {
     after: string | null;
+    first: number | null
     endCursor: string | null;
     hasNextPage: boolean;
     repos: QueryViewerStaredRepoNodes;
@@ -43,6 +44,7 @@ export default function RespositoryTable() {
 
   const [state, setState] = useState<RespositoryTableState>({
     after: null,
+    first: 5,
     endCursor: null,
     hasNextPage: false,
     repos: [],
@@ -50,7 +52,7 @@ export default function RespositoryTable() {
 
   const { data, loading } = useQuery<QueryViewerStaredRepos, QueryViewerStaredReposArgs>(
     QUERY_VIEWER_STARED_REPOS,
-    { variables: { after: state.after } },
+    { variables: { after: state.after, first: state.first } },
   );
 
   useEffect(() => {
@@ -66,12 +68,15 @@ export default function RespositoryTable() {
     }
   }, [data]);
 
-  const loadMore = useCallback(() => {
+  const loadMore = (first?: number) => {
     if (data) {
       const { endCursor } = data.viewer.starredRepositories.pageInfo;
-      setState(prev => ({ ...prev, after: endCursor || null }));
+      setState(prev => ({ ...prev, after: endCursor || null, first: first || 5 }));
     }
-  }, [data]);
+  }
+
+  const onLoad5MoreClick = useCallback(() => loadMore(5), [data]);
+  const onLoad10MoreClick = useCallback(() => loadMore(10), [data])
 
   return (
     <>
@@ -80,8 +85,13 @@ export default function RespositoryTable() {
         <Table.Column title="description" dataIndex="description" key="description" />
       </Table>
       {state.hasNextPage && (
-        <Button style={{ marginTop: '10px' }} type="primary" disabled={loading} onClick={loadMore}>
-          load more
+        <Button style={{ marginTop: '10px' }} type="primary" disabled={loading} onClick={onLoad5MoreClick}>
+          load 5 more
+        </Button>
+      )}
+      {state.hasNextPage && (
+        <Button style={{ marginTop: '10px', marginLeft: '10px' }} type="primary" disabled={loading} onClick={onLoad10MoreClick}>
+          load 10 more
         </Button>
       )}
     </>
