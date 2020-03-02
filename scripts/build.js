@@ -60,12 +60,12 @@ checkBrowsers(paths.appPath, isInteractive)
     // if you're in it, you don't end up in Trash
     fs.emptyDirSync(paths.appBuild);
     // Merge with the public folder
-    copyPublicFolder();
     // Start the webpack build
     return build(previousFileSizes);
   })
   .then(
     ({ stats, previousFileSizes, warnings }) => {
+      copyPublicFolder();
       if (warnings.length) {
         console.log(chalk.yellow('Compiled with warnings.\n'));
         console.log(warnings.join('\n\n'));

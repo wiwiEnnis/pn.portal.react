@@ -24,6 +24,8 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const AntDesignThemePlugin = require('./plugins/AntdThemePlugin');
+const ThemeJsPlugin = require('./plugins/ThemeJsPlugin');
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -449,6 +451,23 @@ module.exports = function(webpackEnv) {
                 },
               }),
             },
+            {
+              test: /\.less$/,
+              use: [
+                {
+                  loader: 'style-loader',
+                },
+                {
+                  loader: 'css-loader', // translates CSS into CommonJS
+                }, 
+                {
+                  loader: 'less-loader', // compiles Less to CSS
+                  options: {
+                    javascriptEnabled: true,
+                  },
+                }
+              ],
+            },
             // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the
             // extensions .module.scss or .module.sass
@@ -532,6 +551,8 @@ module.exports = function(webpackEnv) {
             : undefined
         )
       ),
+      new ThemeJsPlugin(),
+      new AntDesignThemePlugin(),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
@@ -663,5 +684,9 @@ module.exports = function(webpackEnv) {
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
     performance: false,
+    externals: {
+      winTheme: 'theme',
+      winLess: 'less',
+    },
   };
 };
